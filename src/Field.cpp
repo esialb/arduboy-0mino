@@ -11,6 +11,8 @@
 #include <string.h>
 #include "Block.h"
 
+static int draw_state;
+
 Field::Field() {
 	reset();
 }
@@ -62,6 +64,11 @@ void Field::and_block(int x, int y, uint8_t block) {
 }
 
 void Field::draw(Arduboy &arduboy) const {
+	if(draw_state)
+		draw_state = 0;
+	else
+		draw_state = 1;
+
 	arduboy.fillRect(1, 1, 1 + WIDTH * 3, 1 + HEIGHT * 3, BLACK);
 	for(int y = 0; y < HEIGHT; y++) {
 		for(int x = 0; x < WIDTH; x++) {
@@ -91,11 +98,11 @@ void Field::draw(Arduboy &arduboy) const {
 				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 3, WHITE);
 			}
 			if(block & Block::FILLED) {
-				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 1, WHITE);
-				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 2, WHITE);
+				arduboy.drawPixel(1 + 3*x + 1 + draw_state, 1 + 3*y + 1, WHITE);
+				arduboy.drawPixel(1 + 3*x + 2 - draw_state, 1 + 3*y + 2, WHITE);
 				if(!(block & Block::SHAPE)) {
-					arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 2, WHITE);
-					arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 1, WHITE);
+					arduboy.drawPixel(1 + 3*x + 1 + draw_state, 1 + 3*y + 2, WHITE);
+					arduboy.drawPixel(1 + 3*x + 2 - draw_state, 1 + 3*y + 1, WHITE);
 				}
 			}
 		}
