@@ -92,6 +92,16 @@ uint8_t Shape::get_block(uint8_t x, uint8_t y, uint8_t block) const {
 	return block;
 }
 
+const Shape *Shape::rotate_right() const {
+	ShapeType *type = ShapeType::for_id(id);
+	return type->rotate_right(this);
+}
+const Shape *Shape::rotate_left() const {
+	ShapeType *type = ShapeType::for_id(id);
+	return type->rotate_left(this);
+}
+
+
 const Shape Shape::L_UP = Shape(
 		ShapeType::L_ID,
 		0, 0,

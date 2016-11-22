@@ -57,6 +57,9 @@ public:
 
 	uint8_t get_block(uint8_t x, uint8_t y, uint8_t block) const;
 
+	const Shape *rotate_right() const;
+	const Shape *rotate_left() const;
+
 private:
 	uint8_t id;
 	uint8_t x1, x2, x3, x4;
