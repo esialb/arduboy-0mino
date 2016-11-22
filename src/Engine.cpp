@@ -26,7 +26,9 @@ Engine::~Engine() {
 	// TODO Auto-generated destructor stub
 }
 
-void Engine::tick(Field &field, Arduboy &arduboy) {
+bool Engine::tick(Field &field, Arduboy &arduboy) {
+	bool ret = false;
+
 	uint8_t left = arduboy.pressed(LEFT_BUTTON) ? 1 : 0;
 	uint8_t up = arduboy.pressed(UP_BUTTON) ? 1 : 0;
 	uint8_t right = arduboy.pressed(RIGHT_BUTTON) ? 1 : 0;
@@ -43,7 +45,7 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 			bag = 0;
 		int nid;
 		do {
-			nid = (rand() & 0x7) % 7;
+			nid = (random() & 0x7) % 7;
 		} while(bag & (1 << nid));
 		bag |= (1 << nid);
 		next_id = nid + 1;
@@ -52,6 +54,7 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 		field.set_shape(shape);
 		field.set_shape_x(4);
 		field.set_shape_y(0);
+		ret = true;
 	}
 
 	if(left + up + right + down != 1) {
@@ -80,6 +83,7 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 			if(shift_held_frames == 0 && !up)
 				break;
 		}
+		ret = true;
 		if(shift_held_frames < AUTOSHIFT_FRAMES)
 			shift_held_frames++;
 		if(lock) {
@@ -87,7 +91,7 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 			field.set_shape(0);
 			lines += field.clear_lines();
 			rotating = false;
-			return;
+			return ret;
 		}
 	}
 
@@ -100,8 +104,10 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 			if(b && field.can_rotate_right())
 				field.rotate_right();
 			rotating = true;
+			ret = true;
 		}
 	}
+	return ret;
 }
 
 int Engine::get_lines() const {

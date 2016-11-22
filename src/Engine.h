@@ -13,12 +13,12 @@
 
 class Engine {
 public:
-	static const int AUTOSHIFT_FRAMES = 20;
+	static const int AUTOSHIFT_FRAMES = 15;
 
 	Engine();
 	virtual ~Engine();
 
-	void tick(Field &field, Arduboy &arduboy);
+	bool tick(Field &field, Arduboy &arduboy);
 
 	int get_lines() const;
 	int get_next_id() const;
