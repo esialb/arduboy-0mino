@@ -86,6 +86,8 @@ void Engine::tick(Field &field, Arduboy &arduboy) {
 			field.blit_shape();
 			field.set_shape(0);
 			lines += field.clear_lines();
+			rotating = false;
+			return;
 		}
 	}
 

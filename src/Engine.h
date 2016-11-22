@@ -13,7 +13,7 @@
 
 class Engine {
 public:
-	static const int AUTOSHIFT_FRAMES = 30;
+	static const int AUTOSHIFT_FRAMES = 20;
 
 	Engine();
 	virtual ~Engine();

@@ -48,7 +48,7 @@ public:
 	static const Shape I_DOWN;
 
 	Shape(
-			uint8_t id,
+			uint8_t id, uint8_t dir,
 			uint8_t x1, uint8_t y1,
 			uint8_t x2, uint8_t y2,
 			uint8_t x3, uint8_t y3,
@@ -56,7 +56,7 @@ public:
 	virtual ~Shape();
 
 	uint8_t get_id() const;
-
+	uint8_t get_dir() const;
 	uint8_t get_block(uint8_t x, uint8_t y, uint8_t block) const;
 
 	const Shape *rotate_right() const;
@@ -64,6 +64,7 @@ public:
 
 private:
 	uint8_t id;
+	uint8_t dir;
 	uint8_t x1, x2, x3, x4;
 	uint8_t y1, y2, y3, y4;
 	uint8_t b1, b2, b3, b4;

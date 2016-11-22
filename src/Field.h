@@ -51,7 +51,7 @@ public:
 
 	bool can_shift(int x, int y) const;
 	void shift(int x, int y);
-	bool can_shape(const Shape *shape) const;
+	bool can_shape(const Shape *shape, int x, int y) const;
 	bool can_rotate_right() const;
 	void rotate_left();
 	bool can_rotate_left() const;

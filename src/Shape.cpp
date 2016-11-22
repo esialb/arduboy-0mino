@@ -12,14 +12,16 @@
 #include <string.h>
 
 #include "ShapeType.h"
+#include "Direction.h"
 
 Shape::Shape(
-		uint8_t id,
+		uint8_t id, uint8_t dir,
 		uint8_t x1, uint8_t y1,
 		uint8_t x2, uint8_t y2,
 		uint8_t x3, uint8_t y3,
 		uint8_t x4, uint8_t y4) {
 	this->id = id;
+	this->dir = dir;
 	this->x1 = x1;
 	this->x2 = x2;
 	this->x3 = x3;
@@ -105,170 +107,174 @@ uint8_t Shape::get_id() const {
 	return id;
 }
 
+uint8_t Shape::get_dir() const {
+	return dir;
+}
+
 const Shape Shape::L_UP = Shape(
-		ShapeType::L_ID,
-		0, 0,
+		ShapeType::L_ID, Direction::UP,
 		0, 1,
-		0, 2,
-		1, 2);
-const Shape Shape::L_LEFT = Shape(
-		ShapeType::L_ID,
-		0, 2,
-		1, 2,
-		2, 2,
-		2, 1);
-const Shape Shape::L_RIGHT = Shape(
-		ShapeType::L_ID,
-		0, 0,
-		0, 1,
-		1, 0,
+		1, 1,
+		2, 1,
 		2, 0);
-const Shape Shape::L_DOWN = Shape(
-		ShapeType::L_ID,
-		1, 0,
-		2, 0,
-		2, 1,
-		2, 2);
-const Shape Shape::J_LEFT = Shape(
-		ShapeType::J_ID,
+const Shape Shape::L_LEFT = Shape(
+		ShapeType::L_ID, Direction::LEFT,
 		0, 0,
 		1, 0,
-		2, 0,
-		2, 1);
-const Shape Shape::J_UP = Shape(
-		ShapeType::J_ID,
-		2, 0,
-		2, 1,
-		2, 2,
+		1, 1,
 		1, 2);
-const Shape Shape::J_RIGHT = Shape(
-		ShapeType::J_ID,
-		0, 1,
-		0, 2,
+const Shape Shape::L_RIGHT = Shape(
+		ShapeType::L_ID, Direction::RIGHT,
+		1, 0,
+		1, 1,
 		1, 2,
 		2, 2);
-const Shape Shape::J_DOWN = Shape(
-		ShapeType::J_ID,
-		0, 0,
-		1, 0,
+const Shape Shape::L_DOWN = Shape(
+		ShapeType::L_ID, Direction::DOWN,
 		0, 1,
+		1, 1,
+		2, 1,
 		0, 2);
-const Shape Shape::S_LEFT = Shape(
-		ShapeType::S_ID,
+const Shape Shape::J_LEFT = Shape(
+		ShapeType::J_ID, Direction::LEFT,
+		1, 0,
+		1, 1,
+		1, 2,
+		0, 2);
+const Shape Shape::J_UP = Shape(
+		ShapeType::J_ID, Direction::UP,
 		0, 0,
 		0, 1,
 		1, 1,
-		1, 2);
-const Shape Shape::S_UP = Shape(
-		ShapeType::S_ID,
+		2, 1);
+const Shape Shape::J_RIGHT = Shape(
+		ShapeType::J_ID, Direction::RIGHT,
 		1, 0,
 		2, 0,
 		1, 1,
-		0, 1);
+		1, 2);
+const Shape Shape::J_DOWN = Shape(
+		ShapeType::J_ID, Direction::DOWN,
+		0, 1,
+		1, 1,
+		2, 1,
+		2, 2);
+const Shape Shape::S_LEFT = Shape(
+		ShapeType::S_ID, Direction::LEFT,
+		1, 0,
+		1, 1,
+		2, 1,
+		2, 2);
+const Shape Shape::S_UP = Shape(
+		ShapeType::S_ID, Direction::UP,
+		1, 0,
+		2, 0,
+		0, 1,
+		1, 1);
 const Shape Shape::S_RIGHT = Shape(
-		ShapeType::S_ID,
+		ShapeType::S_ID, Direction::RIGHT,
 		1, 0,
 		1, 1,
 		2, 1,
 		2, 2);
 const Shape Shape::S_DOWN = Shape(
-		ShapeType::S_ID,
+		ShapeType::S_ID, Direction::DOWN,
 		1, 1,
 		2, 1,
 		1, 2,
 		0, 2);
 const Shape Shape::Z_LEFT = Shape(
-		ShapeType::Z_ID,
+		ShapeType::Z_ID, Direction::LEFT,
 		1, 0,
 		1, 1,
 		0, 1,
 		0, 2);
 const Shape Shape::Z_UP = Shape(
-		ShapeType::Z_ID,
+		ShapeType::Z_ID, Direction::UP,
 		0, 0,
 		1, 0,
 		1, 1,
 		2, 1);
 const Shape Shape::Z_RIGHT = Shape(
-		ShapeType::Z_ID,
+		ShapeType::Z_ID, Direction::RIGHT,
 		2, 0,
 		2, 1,
 		1, 1,
 		1, 2);
 const Shape Shape::Z_DOWN = Shape(
-		ShapeType::Z_ID,
+		ShapeType::Z_ID, Direction::DOWN,
 		0, 1,
 		1, 1,
 		1, 2,
 		2, 2);
 const Shape Shape::T_LEFT = Shape(
-		ShapeType::T_ID,
+		ShapeType::T_ID, Direction::LEFT,
 		1, 0,
 		0, 1,
 		1, 1,
 		1, 2);
 const Shape Shape::T_UP = Shape(
-		ShapeType::T_ID,
+		ShapeType::T_ID, Direction::UP,
 		1, 0,
 		0, 1,
 		1, 1,
 		2, 1);
 const Shape Shape::T_RIGHT = Shape(
-		ShapeType::T_ID,
+		ShapeType::T_ID, Direction::RIGHT,
 		1, 0,
 		1, 1,
 		2, 1,
 		1, 2);
 const Shape Shape::T_DOWN = Shape(
-		ShapeType::T_ID,
+		ShapeType::T_ID, Direction::DOWN,
 		0, 1,
 		1, 1,
 		1, 2,
 		2, 1);
 const Shape Shape::O_LEFT = Shape(
-		ShapeType::O_ID,
-		0, 0,
-		0, 1,
+		ShapeType::O_ID, Direction::LEFT,
 		1, 0,
-		1, 1);
+		1, 1,
+		2, 0,
+		2, 1);
 const Shape Shape::O_UP = Shape(
-		ShapeType::O_ID,
-		0, 0,
-		0, 1,
+		ShapeType::O_ID, Direction::UP,
 		1, 0,
-		1, 1);
+		1, 1,
+		2, 0,
+		2, 1);
 const Shape Shape::O_RIGHT = Shape(
-		ShapeType::O_ID,
-		0, 0,
-		0, 1,
+		ShapeType::O_ID, Direction::RIGHT,
 		1, 0,
-		1, 1);
+		1, 1,
+		2, 0,
+		2, 1);
 const Shape Shape::O_DOWN = Shape(
-		ShapeType::O_ID,
-		0, 0,
-		0, 1,
+		ShapeType::O_ID, Direction::DOWN,
 		1, 0,
-		1, 1);
+		1, 1,
+		2, 0,
+		2, 1);
 const Shape Shape::I_LEFT = Shape(
-		ShapeType::I_ID,
+		ShapeType::I_ID, Direction::LEFT,
 		1, 0,
 		1, 1,
 		1, 2,
 		1, 3);
 const Shape Shape::I_UP = Shape(
-		ShapeType::I_ID,
+		ShapeType::I_ID, Direction::UP,
 		0, 1,
 		1, 1,
 		2, 1,
 		3, 1);
 const Shape Shape::I_RIGHT = Shape(
-		ShapeType::I_ID,
+		ShapeType::I_ID, Direction::RIGHT,
 		2, 0,
 		2, 1,
 		2, 2,
 		2, 3);
 const Shape Shape::I_DOWN = Shape(
-		ShapeType::I_ID,
+		ShapeType::I_ID, Direction::DOWN,
 		0, 2,
 		1, 2,
 		2, 2,

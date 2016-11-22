@@ -11,6 +11,8 @@
 #include <string.h>
 #include "Block.h"
 
+#include "KickTable.h"
+
 static int draw_state;
 
 Field::Field() {
@@ -164,13 +166,13 @@ bool Field::can_shift(int x, int y) const {
 	return true;
 }
 
-bool Field::can_shape(const Shape *shape) const {
+bool Field::can_shape(const Shape *shape, int x, int y) const {
 	if(!shape)
 		return false;
 	for(int sy = 0; sy < Shape::HEIGHT; sy++) {
 		for(int sx = 0; sx < Shape::WIDTH; sx++) {
-			int bx = shape_x + sx;
-			int by = shape_y + sy;
+			int bx = x + sx;
+			int by = y + sy;
 			uint8_t block = shape->get_block(sx, sy, 0);
 			if(block) {
 				if(bx < LEFT_BOUNDARY || bx > RIGHT_BOUNDARY || by < UP_BOUNDARY || by > DOWN_BOUNDARY)
@@ -183,10 +185,28 @@ bool Field::can_shape(const Shape *shape) const {
 	return true;
 }
 bool Field::can_rotate_right() const {
-	return can_shape(shape->rotate_right());
+	if(!shape)
+		return false;
+	const Shape *rotated = shape->rotate_right();
+	for(int test = 0; test < KickTable::TESTS; test++) {
+		int x = shape_x + KickTable::kick_x_right(shape, test);
+		int y = shape_y - KickTable::kick_y_right(shape, test);
+		if(can_shape(rotated, x, y))
+			return true;
+	}
+	return false;
 }
 bool Field::can_rotate_left() const {
-	return can_shape(shape->rotate_left());
+	if(!shape)
+		return false;
+	Shape *rotated = shape->rotate_left();
+	for(int test = 0; test < KickTable::TESTS; test++) {
+		int x = shape_x + KickTable::kick_x_left(shape, test);
+		int y = shape_y - KickTable::kick_y_left(shape, test);
+		if(can_shape(rotated, x, y))
+			return true;
+	}
+	return false;
 }
 
 void Field::shift(int x, int y) {
@@ -198,14 +218,34 @@ void Field::shift(int x, int y) {
 void Field::rotate_left() {
 	if(!shape)
 		return;
-	shape = shape->rotate_left();
+	const Shape *rotated = shape->rotate_left();
+	for(int test = 0; test < KickTable::TESTS; test++) {
+		int x = shape_x + KickTable::kick_x_left(shape, test);
+		int y = shape_y - KickTable::kick_y_left(shape, test);
+		if(can_shape(rotated, x, y)) {
+			shape = rotated;
+			shape_x = x;
+			shape_y = y;
+			break;
+		}
+	}
 	update_ghost_y();
 }
 
 void Field::rotate_right() {
 	if(!shape)
 		return;
-	shape = shape->rotate_right();
+	const Shape *rotated = shape->rotate_right();
+	for(int test = 0; test < KickTable::TESTS; test++) {
+		int x = shape_x + KickTable::kick_x_right(shape, test);
+		int y = shape_y - KickTable::kick_y_right(shape, test);
+		if(can_shape(rotated, x, y)) {
+			shape = rotated;
+			shape_x = x;
+			shape_y = y;
+			break;
+		}
+	}
 	update_ghost_y();
 }
 
