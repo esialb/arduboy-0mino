@@ -101,6 +101,9 @@ const Shape *Shape::rotate_left() const {
 	return type->rotate_left(this);
 }
 
+uint8_t Shape::get_id() const {
+	return id;
+}
 
 const Shape Shape::L_UP = Shape(
 		ShapeType::L_ID,

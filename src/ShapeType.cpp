@@ -21,6 +21,8 @@ ShapeType::~ShapeType() {
 	// TODO Auto-generated destructor stub
 }
 
+
+
 const ShapeType *ShapeType::for_id(uint8_t id) {
 	if(id == L_ID)
 		return &L;
@@ -34,8 +36,8 @@ const ShapeType *ShapeType::for_id(uint8_t id) {
 		return &T;
 	if(id == O_ID)
 		return &O;
-	if(id == Z_ID)
-		return &Z;
+	if(id == I_ID)
+		return &I;
 	return 0;
 }
 

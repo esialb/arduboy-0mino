@@ -55,6 +55,8 @@ public:
 			uint8_t x4, uint8_t y4);
 	virtual ~Shape();
 
+	uint8_t get_id() const;
+
 	uint8_t get_block(uint8_t x, uint8_t y, uint8_t block) const;
 
 	const Shape *rotate_right() const;

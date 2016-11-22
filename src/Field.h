@@ -57,6 +57,8 @@ public:
 	bool can_rotate_left() const;
 	void rotate_right();
 
+	int clear_lines();
+
 private:
 	uint8_t blocks[WIDTH * (HEIGHT + HIDDEN_HEIGHT)];
 	const Shape *shape;
