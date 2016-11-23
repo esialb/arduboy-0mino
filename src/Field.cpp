@@ -43,7 +43,7 @@ uint8_t Field::get_block_with_shape(int x, int y) const {
 		if(x >= shape_x && x < shape_x + 4 && y >= shape_y && y < shape_y + 4) {
 			sb = shape->get_block(x - shape_x, y - shape_y, 0);
 			if(sb)
-				sb |= Block::LEFT | Block::RIGHT | Block::UP | Block::DOWN | Block::FILLED;
+				sb |= Block::LEFT | Block::RIGHT | Block::UP | Block::DOWN;
 		}
 		if(!sb && x >= shape_x && x < shape_x + 4 && y >= ghost_y && y < ghost_y + 4) {
 			sb = shape->get_block(x - shape_x, y - ghost_y, 0);
@@ -93,12 +93,13 @@ void Field::draw(Arduboy &arduboy) const {
 				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 3, WHITE);
 			}
 			if(block & Block::FILLED) {
-				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 1, WHITE);
-				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 2, WHITE);
-				if(!(block & Block::SHAPE)) {
-					arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 2, WHITE);
-					arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 1, WHITE);
-				}
+				arduboy.fillRect(1 + 3*x, 1 + 3*y, 4, 4, WHITE);
+//				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 1, WHITE);
+//				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 2, WHITE);
+//				if(!(block & Block::SHAPE)) {
+//					arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 2, WHITE);
+//					arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 1, WHITE);
+//				}
 			}
 		}
 	}
