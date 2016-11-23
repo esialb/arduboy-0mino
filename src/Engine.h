@@ -22,6 +22,8 @@ public:
 
 	int get_lines() const;
 	int get_next_id() const;
+	int get_score() const;
+
 
 private:
 	uint8_t bag = 0;
@@ -30,6 +32,7 @@ private:
 	bool rotating = false;
 	int drop_held_frames = 0;
 	int lines = 0;
+	int score = 0;
 	int next_id = 0;
 };
 

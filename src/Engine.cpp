@@ -71,11 +71,14 @@ bool Engine::tick(Field &field, Arduboy &arduboy) {
 		while(shift_held_frames == 0 || autoshifting) {
 			if(left && field.can_shift(-1, 0))
 				field.shift(-1, 0);
-			else if(up && field.can_shift(0, 1))
+			else if(up && field.can_shift(0, 1)) {
+				score++;
+				score++;
 				field.shift(0, 1);
-			else if(right && field.can_shift(1, 0))
+			} else if(right && field.can_shift(1, 0))
 				field.shift(1, 0);
 			else if(down && field.can_shift(0, 1)) {
+				score++;
 				field.shift(0, 1);
 				lock = false;
 			} else
@@ -89,7 +92,16 @@ bool Engine::tick(Field &field, Arduboy &arduboy) {
 		if(lock) {
 			field.blit_shape();
 			field.set_shape(0);
-			lines += field.clear_lines();
+			int cleared = field.clear_lines();
+			lines += cleared;
+			if(cleared >= 1)
+				score += 100;
+			if(cleared >= 2)
+				score += 300;
+			if(cleared >= 3)
+				score += 500;
+			if(cleared >= 4)
+				score += 700;
 			rotating = false;
 			return ret;
 		}
@@ -115,4 +127,8 @@ int Engine::get_lines() const {
 }
 int Engine::get_next_id() const {
 	return next_id;
+}
+
+int Engine::get_score() const {
+	return score;
 }
