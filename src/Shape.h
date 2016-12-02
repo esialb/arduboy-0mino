@@ -62,9 +62,17 @@ public:
 	const Shape *rotate_right() const;
 	const Shape *rotate_left() const;
 
+	uint8_t get_minx() const;
+	uint8_t get_maxx() const;
+
+	uint8_t get_miny() const;
+	uint8_t get_maxy() const;
+
 private:
 	uint8_t id;
 	uint8_t dir;
+	uint8_t minx, maxx;
+	uint8_t miny, maxy;
 	uint8_t x1, x2, x3, x4;
 	uint8_t y1, y2, y3, y4;
 	uint8_t b1, b2, b3, b4;

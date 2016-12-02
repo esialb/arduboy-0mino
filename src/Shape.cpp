@@ -37,6 +37,12 @@ Shape::Shape(
 	s[x3][y3] = 1;
 	s[x4][y4] = 1;
 
+	minx = min(min(min(x1, x2), x3), x4);
+	maxx = max(max(max(x1, x2), x3), x4);
+
+	miny = min(min(min(y1, y2), y3), y4);
+	maxy = max(max(max(y1, y2), y3), y4);
+
 	b1 = b2 = b3 = b4 = Block::LEFT | Block::UP | Block::RIGHT | Block::DOWN;
 
 	if(x1 > 0 && s[x1-1][y1])
@@ -109,6 +115,22 @@ uint8_t Shape::get_id() const {
 
 uint8_t Shape::get_dir() const {
 	return dir;
+}
+
+uint8_t Shape::get_minx() const {
+	return minx;
+}
+
+uint8_t Shape::get_maxx() const {
+	return maxx;
+}
+
+uint8_t Shape::get_miny() const {
+	return miny;
+}
+
+uint8_t Shape::get_maxy() const {
+	return maxy;
 }
 
 const Shape Shape::L_UP = Shape(

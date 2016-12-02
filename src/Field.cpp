@@ -23,6 +23,7 @@ Field::~Field() {
 
 void Field::reset() {
 	memset(this->blocks, 0, sizeof(this->blocks));
+/*
 	for(int y = -HIDDEN_HEIGHT; y < HEIGHT; y++) {
 		set_block(0, y, Block::LEFT);
 		set_block(WIDTH - 1, y, Block::RIGHT);
@@ -30,6 +31,7 @@ void Field::reset() {
 	for(int x = 0; x < WIDTH; x++) {
 		or_block(x, HEIGHT - 1, Block::DOWN);
 	}
+*/
 }
 
 uint8_t Field::get_block(int x, int y) const {
@@ -64,41 +66,41 @@ void Field::and_block(int x, int y, uint8_t block) {
 }
 
 void Field::draw(Arduboy &arduboy) const {
-	arduboy.fillRect(1, 1, 1 + WIDTH * 3, 1 + HEIGHT * 3, BLACK);
+	arduboy.fillRect(1, 0, 3 + WIDTH * 3, 3 + HEIGHT * 3, BLACK);
 	for(int y = 0; y < HEIGHT; y++) {
 		for(int x = 0; x < WIDTH; x++) {
 			uint8_t block = get_block_with_shape(x, y);
 			if(block & Block::LEFT) {
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y, WHITE);
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y + 1, WHITE);
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y + 2, WHITE);
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y + 1, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y + 2, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y + 3, WHITE);
 			}
 			if(block & Block::RIGHT) {
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y, WHITE);
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 1, WHITE);
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 2, WHITE);
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y + 1, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y + 2, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y + 3, WHITE);
 			}
 			if(block & Block::UP) {
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y, WHITE);
-				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y, WHITE);
-				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y, WHITE);
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x + 1, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x + 2, 1 + 3*y, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y, WHITE);
 			}
 			if(block & Block::DOWN) {
-				arduboy.drawPixel(1 + 3*x, 1 + 3*y + 3, WHITE);
-				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 3, WHITE);
-				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 3, WHITE);
-				arduboy.drawPixel(1 + 3*x + 3, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x + 1, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x + 2, 1 + 3*y + 3, WHITE);
+				arduboy.drawPixel(2 + 3*x + 3, 1 + 3*y + 3, WHITE);
 			}
 			if(block & Block::FILLED) {
-				arduboy.fillRect(1 + 3*x, 1 + 3*y, 4, 4, WHITE);
-//				arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 1, WHITE);
-//				arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 2, WHITE);
+				arduboy.fillRect(2 + 3*x, 1 + 3*y, 4, 4, WHITE);
+//				arduboy.drawPixel(2 + 3*x + 1, 1 + 3*y + 1, WHITE);
+//				arduboy.drawPixel(2 + 3*x + 2, 1 + 3*y + 2, WHITE);
 //				if(!(block & Block::SHAPE)) {
-//					arduboy.drawPixel(1 + 3*x + 1, 1 + 3*y + 2, WHITE);
-//					arduboy.drawPixel(1 + 3*x + 2, 1 + 3*y + 1, WHITE);
+//					arduboy.drawPixel(2 + 3*x + 1, 1 + 3*y + 2, WHITE);
+//					arduboy.drawPixel(2 + 3*x + 2, 1 + 3*y + 1, WHITE);
 //				}
 			}
 		}
@@ -269,8 +271,6 @@ int Field::clear_lines() {
 			cleared++;
 			memmove(blocks + WIDTH, blocks, WIDTH * (y + HIDDEN_HEIGHT));
 			memset(blocks, 0, WIDTH);
-			set_block(0, 0, Block::LEFT);
-			set_block(WIDTH - 1, 0, Block::RIGHT);
 			for(int x = 0; x < WIDTH; x++) {
 				if(y == DOWN_BOUNDARY)
 					or_block(x, y, Block::DOWN);

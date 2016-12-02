@@ -31,6 +31,8 @@ void setup() {
 	randomSeed(seed);
 	seed = random() ^ random();
 	EEPROM.write(0, seed);
+
+
 }
 
 void loop() {
@@ -40,32 +42,31 @@ void loop() {
 	bool draw = engine.tick(field, arduboy);
 
 	if(draw) {
-		arduboy.clear();
-		arduboy.drawChar(62, 1, '0', WHITE, BLACK, 2);
-		arduboy.drawChar(74, 1, 'm', WHITE, BLACK, 2);
-		arduboy.drawChar(86, 1, 'i', WHITE, BLACK, 2);
-		arduboy.drawChar(98, 1, 'n', WHITE, BLACK, 2);
-		arduboy.drawChar(110, 1, 'o', WHITE, BLACK, 2);
+		arduboy.fillRect(0, 0, 128, 64, WHITE);
 
-		arduboy.drawRect(33, 1, 28, 28, WHITE);
-		arduboy.fillRect(34, 2, 26, 26, BLACK);
+		arduboy.drawChar(62, 1, '0', BLACK, WHITE, 2);
+		arduboy.drawChar(74, 1, 'm', BLACK, WHITE, 2);
+		arduboy.drawChar(86, 1, 'i', BLACK, WHITE, 2);
+		arduboy.drawChar(98, 1, 'n', BLACK, WHITE, 2);
+		arduboy.drawChar(110, 1, 'o', BLACK, WHITE, 2);
 
 		const Shape *nextShape = ShapeType::for_id(engine.get_next_id())->get_up();
 		int nid = nextShape->get_id();
-		int ox = (nid == ShapeType::I_ID || nid == ShapeType::O_ID) ? 0 : 3;
-		int oy = (nid == ShapeType::I_ID) ? 3 : 6;
-		for(int x = 0; x < Shape::WIDTH; x++) {
-			for(int y = 0; y < Shape::HEIGHT; y++) {
+		int swidth = nextShape->get_maxx() - nextShape->get_minx() + 1;
+		int sheight = nextShape->get_maxy() - nextShape->get_miny() + 1;
+		int ox = 3 * (4 - swidth) - 6 * nextShape->get_minx();
+		int oy = 3 * (4 - sheight) - 6 * nextShape->get_miny();
+		arduboy.fillRect(35, 1, 26, 26, BLACK);
+		for(int x = nextShape->get_minx(); x <= nextShape->get_maxx(); x++) {
+			for(int y = nextShape->get_miny(); y <= nextShape->get_maxy(); y++) {
 				uint8_t block = nextShape->get_block(x, y, 0);
-				if(block)
-					arduboy.fillRect(ox + 35 + x * 6, oy + 3 + y * 6, 6, 6, WHITE);
+				uint8_t color = (block ? WHITE : BLACK);
+				arduboy.fillRect(ox + 36 + x * 6, oy + 2 + y * 6, 6, 6, color);
 			}
 		}
 
-		arduboy.fillRect(33, 30, 64, 6, BLACK);
-		Graphics::draw_int(&arduboy, 33, 30, engine.get_lines(), WHITE);
-		arduboy.fillRect(62, 16, 64, 6, BLACK);
-		Graphics::draw_int(&arduboy, 62, 16, engine.get_score(), WHITE);
+		Graphics::draw_int(&arduboy, 35, 28, engine.get_lines(), BLACK);
+		Graphics::draw_int(&arduboy, 62, 16, engine.get_score(), BLACK);
 
 
 		field.draw(arduboy);
