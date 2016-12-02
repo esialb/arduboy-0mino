@@ -35,6 +35,7 @@ public:
 
 	uint8_t get_block(int x, int y) const;
 	uint8_t get_block_with_shape(int x, int y) const;
+	uint8_t get_shape_block(int x, int y) const;
 	void set_block(int x, int y, uint8_t block);
 	void or_block(int x, int y, uint8_t block);
 	void and_block(int x, int y, uint8_t block);
@@ -60,7 +61,7 @@ public:
 	int clear_lines();
 
 private:
-	uint8_t blocks[WIDTH * (HEIGHT + HIDDEN_HEIGHT)];
+	uint8_t blocks[WIDTH * (HEIGHT + HIDDEN_HEIGHT) / 2];
 	const Shape *shape;
 	int shape_x;
 	int shape_y;

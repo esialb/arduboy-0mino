@@ -32,6 +32,14 @@ void setup() {
 	seed = random() ^ random();
 	EEPROM.write(0, seed);
 
+	arduboy.fillRect(0, 0, 128, 64, WHITE);
+
+	arduboy.drawChar(62, 1, '0', BLACK, WHITE, 2);
+	arduboy.drawChar(74, 1, 'm', BLACK, WHITE, 2);
+	arduboy.drawChar(86, 1, 'i', BLACK, WHITE, 2);
+	arduboy.drawChar(98, 1, 'n', BLACK, WHITE, 2);
+	arduboy.drawChar(110, 1, 'o', BLACK, WHITE, 2);
+
 
 }
 
@@ -42,14 +50,6 @@ void loop() {
 	bool draw = engine.tick(field, arduboy);
 
 	if(draw) {
-		arduboy.fillRect(0, 0, 128, 64, WHITE);
-
-		arduboy.drawChar(62, 1, '0', BLACK, WHITE, 2);
-		arduboy.drawChar(74, 1, 'm', BLACK, WHITE, 2);
-		arduboy.drawChar(86, 1, 'i', BLACK, WHITE, 2);
-		arduboy.drawChar(98, 1, 'n', BLACK, WHITE, 2);
-		arduboy.drawChar(110, 1, 'o', BLACK, WHITE, 2);
-
 		const Shape *nextShape = ShapeType::for_id(engine.get_next_id())->get_up();
 		int nid = nextShape->get_id();
 		int swidth = nextShape->get_maxx() - nextShape->get_minx() + 1;
@@ -65,7 +65,9 @@ void loop() {
 			}
 		}
 
+		arduboy.fillRect(35, 28, 64, 6, WHITE);
 		Graphics::draw_int(&arduboy, 35, 28, engine.get_lines(), BLACK);
+		arduboy.fillRect(62, 16, 64, 6, WHITE);
 		Graphics::draw_int(&arduboy, 62, 16, engine.get_score(), BLACK);
 
 
